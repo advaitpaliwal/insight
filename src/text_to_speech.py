@@ -3,7 +3,7 @@ from playsound import playsound
 import os
 
 
-def speak(text):
+def speak(text: str):
     client = texttospeech.TextToSpeechClient()
 
     synthesis_input = texttospeech.SynthesisInput(text=text)

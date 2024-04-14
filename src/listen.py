@@ -3,7 +3,7 @@ import pyaudio
 import struct
 import speech_recognition as sr
 from src.config import PICOVOICE_ACCESS_KEY
-from src.funcs import chat
+from src.service import chat
 from src.text_to_speech import speak
 from src.recognize_speech import recognize_speech
 

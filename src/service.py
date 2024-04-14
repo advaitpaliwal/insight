@@ -8,6 +8,7 @@ from uuid import uuid4
 from google.ai.generativelanguage import Content, Part, FileData
 from camera import take_picture
 from google.generativeai.types.file_types import File
+import tempfile
 
 genai.configure(api_key=GOOGLE_API_KEY)
 db = FirestoreDB()
@@ -62,16 +63,17 @@ def upload_file_to_genai(filepath: str, prompt: str) -> File:
 
 def get_response(prompt: str) -> str:
     """Answer questions using the model. This function takes a picture before answering the question."""
-    filepath = "picture.jpg"
-    take_picture()
-    print("Answering questions...", prompt)
-    input_file = upload_file_to_genai(filepath, prompt)
-    response = chat.send_message([prompt, input_file])
-    file_id = input_file.uri.split("/")[-1]
-    image_key = f"{file_id}.jpg"
-    image_url = storage.upload_file("my-bucket", filepath, image_key)
-    save_query_to_firestore(prompt, response.text, image_url, file_id)
-    os.remove("picture.jpg")
+    with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
+        filepath = temp_file.name
+        take_picture(filepath)
+        print("Answering questions...", prompt)
+        input_file = upload_file_to_genai(filepath, prompt)
+        response = chat.send_message([prompt, input_file])
+        file_id = input_file.uri.split("/")[-1]
+        image_key = f"{file_id}.jpg"
+        image_url = storage.upload_file("my-bucket", filepath, image_key)
+        save_query_to_firestore(prompt, response.text, image_url, file_id)
+    os.unlink(filepath)
     return response.text
 
 

@@ -1,6 +1,6 @@
 from src.wake_word_detection import detect_wake_word
 from src.recognize_speech import recognize_speech
-from src.funcs import get_response
+from src.service import get_response
 from src.text_to_speech import speak
 
 

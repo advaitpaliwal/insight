@@ -14,6 +14,5 @@ def take_picture(camera_index=0):
         return None
 
     cv2.imwrite('picture.jpg', frame)
-    print("Picture taken and saved as picture.jpg")
     cap.release()
     return "Picture taken and saved as picture.jpg"

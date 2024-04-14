@@ -16,7 +16,7 @@ def play_wav(file_path):
         time.sleep(1)  # Wait for the audio to finish playing
 
 # Path to your WAV file
-wav_file = 'gettysburg10.wav'
+wav_file = 'output.wav'
 
 # Play the WAV file
 play_wav(wav_file)

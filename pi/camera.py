@@ -11,7 +11,7 @@ camera_config = picam2.create_preview_configuration()
 picam2.configure(camera_config)
 
 # Start the camera preview using DRM for non-GUI
-picam2.start_preview(Preview.DRM)
+picam2.start_preview(Preview.QTGL)
 
 # Start the camera
 picam2.start()

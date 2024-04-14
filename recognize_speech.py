@@ -1,27 +1,54 @@
-import speech_recognition as sr
+import pvcheetah
+import pyaudio
+import struct
+from config import PICOVOICE_ACCESS_KEY
 
-recognizer = sr.Recognizer()
-mic = sr.Microphone()
 
+def recognize_speech(endpoint_duration_sec=1.0):
+    cheetah = None
+    pa = None
+    audio_stream = None
 
-def recognize_speech():
-    with mic as source:
-        recognizer.adjust_for_ambient_noise(source)
-        print("Listening...")
-        audio = recognizer.listen(source)
     try:
-        print("Recognizing...")
-        output = recognizer.recognize_google(audio)
-        print(f"Recognized: {output}")
-        return output
-    except sr.UnknownValueError:
-        print("Google Speech Recognition could not understand audio")
-    except sr.RequestError as e:
-        print(
-            f"Could not request results from Google Speech Recognition service; {e}")
+        cheetah = pvcheetah.create(
+            access_key=PICOVOICE_ACCESS_KEY,
+            endpoint_duration_sec=endpoint_duration_sec,
+            enable_automatic_punctuation=True
+        )
+        pa = pyaudio.PyAudio()
+        audio_stream = pa.open(
+            rate=cheetah.sample_rate,
+            channels=1,
+            format=pyaudio.paInt16,
+            input=True,
+            frames_per_buffer=cheetah.frame_length
+        )
 
-    return None
+        print("Listening...")
+        partials = []
+        while True:
+            pcm = audio_stream.read(cheetah.frame_length)
+            pcm = struct.unpack_from("h" * cheetah.frame_length, pcm)
+            partial_transcript, is_endpoint = cheetah.process(pcm)
+            partials.append(partial_transcript)
+            print(f"Partial transcript: {''.join(partials)}", end="\r")
+            if is_endpoint:
+                break
+
+        final_transcript = ''.join(partials) + cheetah.flush()
+        print(f"\nRecognized: {final_transcript}")
+        return final_transcript
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        if cheetah is not None:
+            cheetah.delete()
+        if audio_stream is not None:
+            audio_stream.close()
+        if pa is not None:
+            pa.terminate()
 
 
 if __name__ == "__main__":
-    recognize_speech()
+    recognize_speech(endpoint_duration_sec=1.5)

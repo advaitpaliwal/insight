@@ -1,7 +1,5 @@
 pvporcupine
 google-generativeai
-pyaudio
 SpeechRecognition
 firebase-admin
 google-cloud-texttospeech
-pygame

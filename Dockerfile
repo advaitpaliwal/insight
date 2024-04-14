@@ -10,6 +10,8 @@ RUN apt update && apt -y upgrade
 RUN apt update && apt install -y --no-install-recommends \
     python3-pip \
     python3-picamera2 \
+    python3-pyaudio \
+    python3-pygame \
     libatlas-base-dev \
     libportaudio2 \
     libpulse-dev \

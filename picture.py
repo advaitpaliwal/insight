@@ -21,7 +21,7 @@ def take_picture(filepath: str):
     picam2.start()
 
     # Wait for 2 seconds to allow the camera sensor to adjust
-    time.sleep(2)
+    sleep(2)
 
     # Capture an image and save it as filepath"
     picam2.capture_file(filepath)

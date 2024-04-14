@@ -1,4 +1,7 @@
-from picamera2 import Picamera2
+try:
+    from picamera2 import Picamera2
+except:
+    pass
 from time import sleep
 
 

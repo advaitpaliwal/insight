@@ -1,9 +1,11 @@
 from google.cloud import storage
+from app.vars import STORAGE_CREDENTIALS_FILE
 
 
 class GCStorage:
     def __init__(self):
-        self.client = storage.Client()
+        self.client = storage.Client.from_service_account_json(
+            STORAGE_CREDENTIALS_FILE)
         self.bucket = self.client.bucket("mhacks-data")
 
     def upload_file(self, key, file_path, public=True, content_disposition='inline'):

@@ -160,5 +160,6 @@ cython_debug/
 #.idea/
 
 # secrets
-credentials.json
+firebase_creds.json
+storage_creds.json
 config.py

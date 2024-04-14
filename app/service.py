@@ -1,8 +1,8 @@
 import google.generativeai as genai
 from app.config import GOOGLE_API_KEY
 import os
-from database import FirestoreDB
-from storage import GCStorage
+from app.database import FirestoreDB
+from app.storage import GCStorage
 from datetime import datetime
 from uuid import uuid4
 from google.ai.generativelanguage import Content, Part, FileData

@@ -15,8 +15,9 @@ db = FirestoreDB()
 storage = GCStorage()
 
 system_instruction = """
-You are an AI assistant integrated into my smart glasses. 
-Provide concise, real-time assistance based on my vision or general questions. 
+You are an AI assistant integrated into my smart glasses.
+You see exactly what I see. 
+Provide concise, real-time assistance based on my questions regarding my vision or general questions. 
 If my question is vague or refers to something unspecified, use the glasses' visual feed for context. 
 Keep responses to 2 sentences for audio output. Focus on relevant information and avoid tasks beyond providing answers. 
 Tailor responses to our unique glasses-based interaction, making me feel like we're working together to enhance my daily life.
@@ -63,16 +64,17 @@ def upload_file_to_genai(filepath: str, prompt: str) -> File:
 
 def get_response(prompt: str) -> str:
     """Answer questions using the model. This function takes a picture before answering the question."""
-    filepath = "picture.jpg"
-    take_picture()
-    print("Answering questions...", prompt)
-    input_file = upload_file_to_genai(filepath, prompt)
-    response = chat.send_message([prompt, input_file])
-    file_id = input_file.uri.split("/")[-1]
-    image_key = f"{file_id}.jpg"
-    image_url = storage.upload_file("my-bucket", filepath, image_key)
-    save_query_to_firestore(prompt, response.text, image_url, file_id)
-    os.remove(filepath)
+    with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
+        filepath = temp_file.name
+        take_picture(filepath)
+        print("Answering questions...", prompt)
+        input_file = upload_file_to_genai(filepath, prompt)
+        response = chat.send_message([prompt, input_file])
+        file_id = input_file.uri.split("/")[-1]
+        image_key = f"{file_id}.jpg"
+        image_url = storage.upload_file(image_key, filepath)
+        save_query_to_firestore(prompt, response.text, image_url, file_id)
+    os.unlink(filepath)
     return response.text
 
 

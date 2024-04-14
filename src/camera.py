@@ -2,10 +2,10 @@ import cv2
 from time import sleep
 
 
-def take_picture(camera_index=0):
-    """Take a picture using the specified camera and save it as picture.jpg."""
+def take_picture(filepath: str):
+    """Take a picture using the specified camera and save it to the provided file path."""
     print("Taking picture...")
-    cap = cv2.VideoCapture(camera_index)
+    cap = cv2.VideoCapture(0)
     sleep(2)
     ret, frame = cap.read()
     if not ret:
@@ -13,6 +13,7 @@ def take_picture(camera_index=0):
         cap.release()
         return None
 
-    cv2.imwrite('picture.jpg', frame)
+    cv2.imwrite(filepath, frame)
+    print(f"Picture taken and saved as {filepath}")
     cap.release()
-    return "Picture taken and saved as picture.jpg"
+    return f"Picture taken and saved as {filepath}"

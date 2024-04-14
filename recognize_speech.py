@@ -2,7 +2,7 @@ import pvcheetah
 import pyaudio
 import struct
 from config import PICOVOICE_ACCESS_KEY
-# from text_to_speech import speak
+from text_to_speech import speak
 import random
 
 listening_phrases = [
@@ -32,7 +32,7 @@ def recognize_speech(endpoint_duration_sec=1.0):
         )
         print("One moment please...")
         pa = pyaudio.PyAudio()
-        # speak(random.choice(listening_phrases))
+        speak(random.choice(listening_phrases))
         print("Listening...")
         audio_stream = pa.open(
             rate=cheetah.sample_rate,

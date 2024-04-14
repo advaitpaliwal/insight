@@ -25,6 +25,8 @@ def speak(text: str):
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
         temp_file.write(response.audio_content)
         temp_file_path = temp_file.name
+    with open("output.mp3", "wb") as out:
+        out.write(response.audio_content)
 
     print(f'Audio content written to temporary file: {temp_file_path}')
 

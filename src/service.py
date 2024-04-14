@@ -72,7 +72,7 @@ def get_response(prompt: str) -> str:
         response = chat.send_message([prompt, input_file])
         file_id = input_file.uri.split("/")[-1]
         image_key = f"{file_id}.jpg"
-        image_url = storage.upload_file("my-bucket", filepath, image_key)
+        image_url = storage.upload_file(image_key, filepath)
         save_query_to_firestore(prompt, response.text, image_url, file_id)
     os.unlink(filepath)
     return response.text

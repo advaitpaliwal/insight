@@ -5,7 +5,7 @@ def recognize_speech():
     recognizer = sr.Recognizer()
     names = sr.Microphone.list_microphone_names()
     print(names)
-    with sr.Microphone() as source:
+    with sr.Microphone(device_index=2) as source:
         print("Listening...")
         audio = recognizer.listen(source)
     try:

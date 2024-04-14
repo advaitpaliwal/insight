@@ -1,13 +1,11 @@
-FROM debian:bullseye
+FROM python:3.10-bullseye
 
-RUN apt update && apt install -y --no-install-recommends gnupg
+# Set the working directory
+WORKDIR /app
 
-RUN echo "deb http://archive.raspberrypi.org/debian/ bullseye main" > /etc/apt/sources.list.d/raspi.list \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 82B129927FA3303E
-
-RUN apt update && apt -y upgrade
-
-RUN apt update && apt install -y --no-install-recommends \
+# Install system dependencies in a single layer
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gnupg \
     python3-pip \
     python3-picamera2 \
     python3-pyaudio \
@@ -20,12 +18,8 @@ RUN apt update && apt install -y --no-install-recommends \
     libcap-dev \
     portaudio19-dev \
     && apt-get clean \
-    && apt-get autoremove \
-    && rm -rf /var/cache/apt/archives/* \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set the working directory
-WORKDIR /app
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 # Copy the requirements file to the working directory
 COPY requirements.txt .

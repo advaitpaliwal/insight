@@ -3,6 +3,8 @@ import speech_recognition as sr
 
 def recognize_speech():
     recognizer = sr.Recognizer()
+    names = sr.Microphone.list_microphone_names()
+    print(names)
     with sr.Microphone() as source:
         print("Listening...")
         audio = recognizer.listen(source)

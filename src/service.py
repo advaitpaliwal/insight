@@ -6,7 +6,7 @@ from storage import GCStorage
 from datetime import datetime
 from uuid import uuid4
 from google.ai.generativelanguage import Content, Part, FileData
-from pi.camera import take_picture
+from src.camera import take_picture
 from google.generativeai.types.file_types import File
 import tempfile
 

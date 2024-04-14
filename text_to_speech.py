@@ -43,3 +43,7 @@ def speak(text: str):
 
     # Remove the temporary file
     os.remove(temp_file_path)
+
+
+if __name__ == "__main__":
+    speak("Hello, how are you?")

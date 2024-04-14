@@ -68,7 +68,7 @@ def get_response(prompt: str) -> str:
         filepath = temp_file.name
         take_picture(filepath)
         print("Answering questions...", prompt)
-        print("I'm analyzing the image to answer your question. One moment please.")
+        speak("I'm analyzing the image to answer your question. One moment please.")
         input_file = upload_file_to_genai(filepath, prompt)
         response = chat.send_message([prompt, input_file])
         response_text = response.text

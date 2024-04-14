@@ -63,15 +63,16 @@ def answer_question_about_vision(prompt: str):
     response = model.generate_content([prompt, input_file])
     image_key = f"{file_id}.jpg"
     image_url = storage.upload_file(image_key, filepath)
-    save_query_to_firestore(prompt, response.text, image_url)
+    save_query_to_firestore(prompt, response.text, image_url, file_id)
     os.remove("picture.jpg")
     return response.text
 
 
-def save_query_to_firestore(prompt: str, response: str, image_url: str = None):
+def save_query_to_firestore(prompt: str, response: str, image_url: str = None, file_id: str = None):
     db = FirestoreDB()
     data_id = uuid4()
     data = {
+        "file_id": file_id,
         "image_url": image_url,
         "created_at": datetime.now(),
         "input_prompt": prompt,
@@ -94,3 +95,13 @@ def get_response(user_input: str):
 
     response = chat.send_message(user_input)
     return response.text
+
+
+def get_all_items_firestore():
+    """ Get all items from Firestore."""
+    db = FirestoreDB()
+    items = db.get_data("data")
+    return items
+
+
+# print(get_all_items_firestore())

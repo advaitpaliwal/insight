@@ -38,3 +38,12 @@ class GCStorage:
 
     def get_public_url(self, key):
         return f"https://storage.googleapis.com/{self.bucket.name}/{key}"
+
+
+if __name__ == "__main__":
+    store = GCStorage()
+    print(store.list_files())
+    store.upload_file("test.txt", "test.txt")
+    print(store.list_files())
+    print(store.list_files())
+    print(store.get_public_url("test.txt"))

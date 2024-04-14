@@ -70,7 +70,7 @@ def answer_question_about_vision(prompt: str):
 
 def save_query_to_firestore(prompt: str, response: str, image_url: str = None, file_id: str = None):
     db = FirestoreDB()
-    data_id = uuid4()
+    data_id = uuid4().hex
     data = {
         "file_id": file_id,
         "image_url": image_url,

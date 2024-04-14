@@ -10,7 +10,7 @@ def main():
         if wake_word_detected:
             user_input = recognize_speech()
             if user_input:
-                print(f"User said: {user_input}")
+                print(f"User: {user_input}")
                 response = get_response(user_input)
                 speak(response)
 

@@ -13,16 +13,18 @@ RUN apt-get update && \
     libasound2-dev \
     libgrpc-dev \
     libcap-dev \
+    portaudio19-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the pyproject.toml and setup.py files to the working directory
-COPY pyproject.toml setup.py ./
+# Copy the requirements file to the working directory
+COPY requirements.txt .
 
-# Install build dependencies
-RUN pip install --no-cache-dir setuptools wheel Cython
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Build and install the project dependencies
-RUN pip install --no-cache-dir .
+# Create a non-root user and switch to it
+RUN useradd --create-home appuser
+USER appuser
 
 # Copy the application code to the container
 COPY --chown=appuser:appuser . .

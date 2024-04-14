@@ -9,7 +9,7 @@ from google.ai.generativelanguage import Content, Part, FileData
 from picture import take_picture
 from google.generativeai.types.file_types import File
 import tempfile
-
+from text_to_speech import speak
 genai.configure(api_key=GOOGLE_API_KEY)
 db = FirestoreDB()
 storage = GCStorage()
@@ -68,14 +68,16 @@ def get_response(prompt: str) -> str:
         filepath = temp_file.name
         take_picture(filepath)
         print("Answering questions...", prompt)
+        print("I'm analyzing the image to answer your question. One moment please.")
         input_file = upload_file_to_genai(filepath, prompt)
         response = chat.send_message([prompt, input_file])
+        response_text = response.text
         file_id = input_file.uri.split("/")[-1]
         image_key = f"{file_id}.jpg"
         image_url = storage.upload_file(image_key, filepath)
-        save_query_to_firestore(prompt, response.text, image_url, file_id)
+        save_query_to_firestore(prompt, response_text, image_url, file_id)
     os.unlink(filepath)
-    return response.text
+    return response_text
 
 
 def save_query_to_firestore(prompt: str, response: str, image_url: str = None, file_id: str = None) -> None:

@@ -25,8 +25,6 @@ def speak(text: str):
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
         temp_file.write(response.audio_content)
         temp_file_path = temp_file.name
-    with open("output.mp3", "wb") as out:
-        out.write(response.audio_content)
 
     print(f'Audio content written to temporary file: {temp_file_path}')
 
@@ -41,7 +39,7 @@ def speak(text: str):
 
     # Wait for the music to play completely
     while pygame.mixer.music.get_busy():
-        sleep(1)
+        sleep(0.5)
 
     # Remove the temporary file
     os.remove(temp_file_path)

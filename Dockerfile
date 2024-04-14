@@ -12,6 +12,7 @@ RUN apt-get update && \
     libpulse-dev \
     libasound2-dev \
     libgrpc-dev \
+    libcap-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file to the working directory

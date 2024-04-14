@@ -45,5 +45,6 @@ if __name__ == "__main__":
     print(store.list_files())
     store.upload_file("test.txt", "test.txt")
     print(store.list_files())
+    store.delete_file("test.txt")
     print(store.list_files())
     print(store.get_public_url("test.txt"))

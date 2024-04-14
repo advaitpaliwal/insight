@@ -2,6 +2,21 @@ import pvcheetah
 import pyaudio
 import struct
 from config import PICOVOICE_ACCESS_KEY
+from text_to_speech import speak
+import random
+
+listening_phrases = [
+    "Yes, how can I assist?",
+    "I'm here, what do you need?",
+    "Listening, go ahead!",
+    "How can I help you today?",
+    "I'm ready, what's up?",
+    "What can I do for you?",
+    "Go ahead, I'm all ears!",
+    "Ready when you are!",
+    "Yes, what would you like?",
+    "How may I assist you today?"
+]
 
 
 def recognize_speech(endpoint_duration_sec=1.0):
@@ -16,6 +31,8 @@ def recognize_speech(endpoint_duration_sec=1.0):
             enable_automatic_punctuation=True
         )
         pa = pyaudio.PyAudio()
+        speak(random.choice(listening_phrases))
+        print("Listening...")
         audio_stream = pa.open(
             rate=cheetah.sample_rate,
             channels=1,
@@ -23,8 +40,6 @@ def recognize_speech(endpoint_duration_sec=1.0):
             input=True,
             frames_per_buffer=cheetah.frame_length
         )
-
-        print("Listening...")
         partials = []
         while True:
             pcm = audio_stream.read(cheetah.frame_length)

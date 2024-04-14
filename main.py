@@ -1,7 +1,7 @@
-from app.wake_word_detection import detect_wake_word
-from app.recognize_speech import recognize_speech
-from app.service import get_response
-from app.text_to_speech import speak
+from wake_word_detection import detect_wake_word
+from recognize_speech import recognize_speech
+from service import get_response
+from text_to_speech import speak
 
 
 def main():

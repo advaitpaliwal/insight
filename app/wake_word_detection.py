@@ -1,7 +1,7 @@
 import pvporcupine
 import pyaudio
 import struct
-from app.config import PICOVOICE_ACCESS_KEY
+from config import PICOVOICE_ACCESS_KEY
 
 
 def detect_wake_word():

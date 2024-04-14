@@ -1,5 +1,5 @@
 from google.cloud import storage
-from app.vars import STORAGE_CREDENTIALS_FILE
+from vars import STORAGE_CREDENTIALS_FILE
 
 
 class GCStorage:

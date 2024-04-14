@@ -8,6 +8,7 @@ def main():
     while True:
         wake_word_detected = detect_wake_word()
         if wake_word_detected:
+            print("Trying to recognize speech...")
             user_input = recognize_speech()
             if user_input:
                 print(f"User: {user_input}")

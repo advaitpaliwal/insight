@@ -2,7 +2,7 @@ import pvcheetah
 import pyaudio
 import struct
 from config import PICOVOICE_ACCESS_KEY
-from text_to_speech import speak
+# from text_to_speech import speak
 import random
 
 listening_phrases = [

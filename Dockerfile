@@ -15,15 +15,14 @@ RUN apt-get update && \
     libcap-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file to the working directory
-COPY requirements.txt .
+# Copy the pyproject.toml and setup.py files to the working directory
+COPY pyproject.toml setup.py ./
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install build dependencies
+RUN pip install --no-cache-dir setuptools wheel Cython
 
-# Create a non-root user and switch to it
-RUN useradd --create-home appuser
-USER appuser
+# Build and install the project dependencies
+RUN pip install --no-cache-dir .
 
 # Copy the application code to the container
 COPY --chown=appuser:appuser . .

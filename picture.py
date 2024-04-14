@@ -6,7 +6,6 @@ def take_picture(filepath: str):
     """Take a picture using the Picamera2 library and save it to the provided file path."""
     print("Taking picture...")
 
-    # Create an instance of the Picamera2 class
     picam2 = Picamera2()
 
     # Create a camera configuration for preview
@@ -15,13 +14,16 @@ def take_picture(filepath: str):
     # Configure the camera with the preview configuration
     picam2.configure(camera_config)
 
+    # Start the camera preview using DRM for non-GUI
+    picam2.start_preview(Preview.QTGL)
+
     # Start the camera
     picam2.start()
 
     # Wait for 2 seconds to allow the camera sensor to adjust
-    sleep(2)
+    time.sleep(2)
 
-    # Capture an image and save it to the specified file path
+    # Capture an image and save it as filepath"
     picam2.capture_file(filepath)
 
     # Stop the camera

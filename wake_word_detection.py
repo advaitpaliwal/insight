@@ -29,7 +29,7 @@ def detect_wake_word():
             pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
             keyword_index = porcupine.process(pcm)
             if keyword_index >= 0:
-                print("Wake word detected! One moment please...")
+                print("Wake word detected")
                 return True
 
     except Exception as e:

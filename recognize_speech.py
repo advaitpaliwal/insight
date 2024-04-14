@@ -30,6 +30,7 @@ def recognize_speech(endpoint_duration_sec=1.0):
             endpoint_duration_sec=endpoint_duration_sec,
             enable_automatic_punctuation=True
         )
+        print("One moment please...")
         pa = pyaudio.PyAudio()
         speak(random.choice(listening_phrases))
         print("Listening...")

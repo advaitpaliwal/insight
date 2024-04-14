@@ -14,7 +14,8 @@ RUN apt-get update && \
     libgrpc-dev \
     libcap-dev \
     portaudio19-dev \
-    libcamera-dev \
+    python3-picamera2 \
+    python3-libcamera \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file to the working directory

@@ -4,5 +4,4 @@ pyaudio
 SpeechRecognition
 firebase-admin
 google-cloud-texttospeech
-picamera2
 pygame

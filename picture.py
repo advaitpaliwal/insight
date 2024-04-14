@@ -38,10 +38,12 @@
 
 import cv2
 from time import sleep
+from text_to_speech import speak
 
 
 def take_picture(filepath: str):
     """Take a picture using the specified camera and save it to the provided file path."""
+    speak("I'm taking a picture now")
     print("Taking picture...")
     cap = cv2.VideoCapture(0)
     sleep(2)

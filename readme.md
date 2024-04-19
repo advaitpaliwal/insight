@@ -33,7 +33,7 @@ check demo on [here](https://twitter.com/advaitpaliwal/status/177969773052631052
    cd [repo-name]
    pip install -r requirements.txt
    ```
-3. Add the neccessary api keys to the config.py file, check config.example.py
+3. Add the necessary api keys to the config.py file, check config.example.py
 
 ## Usage
 

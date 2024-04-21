@@ -30,6 +30,8 @@ def create_history_from_firestore(n: int = 100):
     """Create history object from Firestore data."""
     n = min(n, 1000)
     items = db.get_data("data", field="created_at", limit=n, descending=True)
+    items = {k: v for k, v in items.items() if (
+        datetime.now() - v["created_at"]).days < 2}
     history = []
     for item in items.values():
         user_content = Content(
